@@ -22,7 +22,7 @@ class AuthenticationController extends ApplicationController {
     CUSTOMER: "CUSTOMER",
   }
 
-  authorize =(rolename) => {
+  authorize = (rolename) => {
     return (req, res, next) => {
       try {
         const token = req.headers.authorization?.split("Bearer ")[1];
@@ -35,7 +35,7 @@ class AuthenticationController extends ApplicationController {
         next();
       }
 
-      catch(err) {
+      catch (err) {
         res.status(401).json({
           error: {
             name: err.name,
@@ -53,7 +53,7 @@ class AuthenticationController extends ApplicationController {
       const password = req.body.password;
       const user = await this.userModel.findOne({
         where: { email, },
-        include: [{ model: this.roleModel, attributes: [ "id", "name", ], }]
+        include: [{ model: this.roleModel, attributes: ["id", "name",], }]
       });
 
       if (!user) {
@@ -77,7 +77,7 @@ class AuthenticationController extends ApplicationController {
       })
     }
 
-    catch(err) {
+    catch (err) {
       next(err);
     }
   }
@@ -104,7 +104,7 @@ class AuthenticationController extends ApplicationController {
         email,
         encryptedPassword: this.encryptPassword(password),
         roleId: role.id,
-      }) 
+      })
 
       const accessToken = this.createTokenFromUser(user, role);
 
@@ -113,7 +113,7 @@ class AuthenticationController extends ApplicationController {
       })
     }
 
-    catch(err) {
+    catch (err) {
       next(err);
     }
   }
@@ -127,7 +127,7 @@ class AuthenticationController extends ApplicationController {
       return;
     }
 
-    const role = await this.roleModel.findByPk(user.roleId); 
+    const role = await this.roleModel.findByPk(user.roleId);
 
     if (!role) {
       const err = new RecordNotFoundError(this.roleModel.name);

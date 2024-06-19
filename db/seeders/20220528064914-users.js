@@ -13,7 +13,7 @@ const names = [
 ]
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const password = "123456";
     const encryptedPassword = bcrypt.hashSync(password, 10);
     const timestamp = new Date();
@@ -28,7 +28,7 @@ module.exports = {
       name,
       email: `${name.toLowerCase()}@binar.co.id`,
       encryptedPassword,
-      roleId: role.id, 
+      roleId: role.id,
       createdAt: timestamp,
       updatedAt: timestamp,
     }))
@@ -36,7 +36,7 @@ module.exports = {
     await queryInterface.bulkInsert('Users', users, {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', { name: { [Op.in]: names } }, {});
   }
 };

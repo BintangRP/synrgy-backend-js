@@ -26,7 +26,7 @@ class CarController extends ApplicationController {
   }
 
   handleGetCar = async (req, res) => {
-    const car = await this.getCarFromRequest(req); 
+    const car = await this.getCarFromRequest(req);
 
     res.status(200).json(car);
   }
@@ -51,7 +51,7 @@ class CarController extends ApplicationController {
       res.status(201).json(car);
     }
 
-    catch(err) {
+    catch (err) {
       res.status(422).json({
         error: {
           name: err.name,
@@ -75,7 +75,7 @@ class CarController extends ApplicationController {
             [Op.gte]: rentStartedAt,
           },
           rentEndedAt: {
-            [Op.lte]: rentEndedAt, 
+            [Op.lte]: rentEndedAt,
           }
         }
       });
@@ -96,7 +96,7 @@ class CarController extends ApplicationController {
       res.status(201).json(userCar)
     }
 
-    catch(err) {
+    catch (err) {
       next(err);
     }
   }
@@ -123,7 +123,7 @@ class CarController extends ApplicationController {
       res.status(200).json(car);
     }
 
-    catch(err) {
+    catch (err) {
       res.status(422).json({
         error: {
           name: err.name,
@@ -134,7 +134,7 @@ class CarController extends ApplicationController {
   }
 
   handleDeleteCar = async (req, res) => {
-    const car = await this.carModel.destroy(req.params.id); 
+    const car = await this.carModel.destroy(req.params.id);
     res.status(204).end();
   }
 
@@ -157,7 +157,7 @@ class CarController extends ApplicationController {
     if (!!availableAt) {
       include.where = {
         rentEndedAt: {
-          [Op.gte]: availableAt, 
+          [Op.gte]: availableAt,
         }
       }
     }
