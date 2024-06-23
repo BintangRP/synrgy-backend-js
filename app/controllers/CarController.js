@@ -27,8 +27,11 @@ class CarController extends ApplicationController {
 
   handleGetCar = async (req, res) => {
     const car = await this.getCarFromRequest(req);
-
-    res.status(200).json(car);
+    if (!car) {
+      res.status(404).json(car)
+    } else {
+      res.status(200).json(car);
+    }
   }
 
   handleCreateCar = async (req, res) => {
